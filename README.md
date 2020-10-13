@@ -7,6 +7,10 @@ This is a docker-compose cheat-sheet
 - [Docker-Compose Cheat Sheet](#docker-compose-cheat-sheet)
   - [Table of Content](#table-of-content)
   - [Services](#services)
+  - [Barebone services](#barebone-services)
+    - [Image](#image)
+    - [Build](#build)
+    - [Container Name](#container-name)
   - [Volumes](#volumes)
     - [Bind Mounting](#bind-mounting)
       - [Short Syntax](#short-syntax)
@@ -20,6 +24,8 @@ This is a docker-compose cheat-sheet
   - [Networking](#networking)
 
 ## Services
+
+## Barebone services
 
 The barebone docker-compose file ways starts with a version and then services
 
@@ -41,6 +47,62 @@ services:
   database:
   redis:
   app:
+```
+
+### Image
+
+You can specify what image your services should start from
+The image is a dictionary.
+
+```yaml
+version: "3.8"
+
+services:
+  database:
+    image: postgres:9.4
+  redis:
+    image: redis:alpine
+  app:
+    image: my-app
+```
+
+### Build
+
+If you have a Dockerfile you want to build you can also specify that in the docker compose. 
+
+With the dot you are actually saying that the Dockerfile is found in the same directory as the docker-compose file. If the Dockerfile is not found docker-compose will be using the image.
+
+You can find more detail in [Docker Build documentation](https://docs.docker.com/compose/compose-file/#build)
+
+If you already built once and you want to re-build you have to run docker-compose with `--build` options like so:
+
+    docker-compose up --build
+
+```yaml
+version: "3.8"
+
+services:
+  database:
+  redis:
+  app:
+    build: .
+    image: my-app
+```
+
+### Container Name
+
+You can also specify a custom name for your container
+
+```yaml
+version: "3.8"
+
+services:
+  database:
+  redis:
+  app:
+    build: .
+    image: my-app
+    container_name: my-web-container
 ```
 
 ## Volumes
