@@ -33,9 +33,9 @@ In our case we have 3 three containers we want to orchestrate
 version: "3.8"
 
 services:
-    database:
-    redis:
-    app:
+  database:
+  redis:
+  app:
 ```
 
 ## Volumes
@@ -56,11 +56,11 @@ the synxtax is `source:target` where source is a local folder you want to bind m
 version: "3.8"
 
 services:
-    database:
-      volumes:
-        - ~/Document/databases:/var/lib/mysql/data
-    redis:
-    app:
+  database:
+    volumes:
+      - ~/Document/databases:/var/lib/mysql/data
+  redis:
+  app:
 ```
 
 #### Long Syntax
@@ -70,14 +70,13 @@ You specify the type, source and target
 version: "3.8"
 
 services:
-    database:
-      volumes:
-        - type: bind 
-	  source: ~/Documents/databases
-	  target: /var/lib/mysql/data
-    redis:
-    app:
-
+  database:
+    volumes:
+      - type: bind
+  source: ~/Documents/databases
+  target: /var/lib/mysql/data
+  redis:
+  app:
 ```
 
 ### Volume Mounting
@@ -91,14 +90,14 @@ the syntax is `source:target`
 version: "3.8"
 
 services:
-    database:
-      volumes:
-        - db-data:/var/lib/mysql/data
-    redis:
-    app:
+  database:
+    volumes:
+      - db-data:/var/lib/mysql/data
+  redis:
+  app:
 
 volumes:
-    db-data
+  db-data:
 ```
 #### Long Syntax
 `no-copy`: flag to disable copying of data from a container when a volume is created
@@ -107,18 +106,18 @@ volumes:
 version: "3.8"
 
 services:
-    database:
-      volumes:
-        - type: volume
-          source: db-data
-	  target: /var/lib/mysql/data
-	  volume:
-	    no-copy: true
-    redis:
-    app:
+  database:
+    volumes:
+      - type: volume
+        source: db-data
+  target: /var/lib/mysql/data
+  volume:
+    no-copy: true
+  redis:
+  app:
 
 volumes:
-    db-data
+  db-data:
 ```
 
 ### Volume and Bind Mix
@@ -131,15 +130,15 @@ You can also mix Volume mounting and bind mounting
 version: "3.8"
 
 services:
-    database:
-      volumes:
-        - db-data:/var/lib/mysql/data
-	- ~/Document/databases:/var/lib/mysql/data
-    redis:
-    app:
+  database:
+    volumes:
+      - db-data:/var/lib/mysql/data
+      - ~/Document/databases:/var/lib/mysql/data
+  redis:
+  app:
 
 volumes:
-    db-data
+  db-data:
 ```
 
 #### Long Syntax
@@ -148,22 +147,23 @@ volumes:
 version: "3.8"
 
 services:
-    database:
-      volumes:
-        - type: volume
-          source: db-data
-	  target: /var/lib/mysql/data
-	  volume:
-	    no-copy: true
-	- type: bind 
-	  source: ~/Documents/databases
-	  target: /var/lib/mysql/data
-    redis:
-    app:
+  database:
+    volumes:
+      - type: volume
+        source: db-data
+        target: /var/lib/mysql/data
+        volume:
+          no-copy: true
+      - type: bind
+        source: ~/Documents/databases
+        target: /var/lib/mysql/data
+  redis:
+  app:
 
 volumes:
-    db-data
+  db-data:
 ```
+
 ## Networking
 
 Per default docker containers run over the bridge network. However you can specify your own networks.
@@ -175,6 +175,7 @@ Networks under a service is a list you can either list your networks with `-` or
 Both notations are shown below:
 server has a  `-` notation
 app has a `[]` notation
+
 ```yaml
 version: "3.8"
 
@@ -197,4 +198,3 @@ networks:
     front_end:
     back_end:
 ```
-
