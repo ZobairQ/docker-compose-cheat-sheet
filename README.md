@@ -10,6 +10,7 @@ This is a docker-compose cheat-sheet
   - [Barebone services](#barebone-services)
     - [Image](#image)
     - [Build](#build)
+    - [Ports](#ports)
     - [Container Name](#container-name)
   - [Volumes](#volumes)
     - [Bind Mounting](#bind-mounting)
@@ -85,6 +86,26 @@ services:
   database:
   redis:
   app:
+    build: .
+    image: my-app
+```
+
+### Ports
+You can expose ports inside your container and map them to the port of the host. 
+The syntax is `hostPort:ContainerPort` and an example would be `9090:8080` the port `8080` on the container will now be mapped to `9090` in the host.
+The ports propert is a __list__ and is specified for each service.
+
+```yaml
+version: "3.8"
+
+services:
+  database:
+  redis:
+  app:
+    ports:
+      - 9090:8080
+      - 5001:80
+      - 5858:5858
     build: .
     image: my-app
 ```
