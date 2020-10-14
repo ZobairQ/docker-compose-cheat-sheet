@@ -11,6 +11,7 @@ This is a docker-compose cheat-sheet
     - [Image](#image)
     - [Build](#build)
     - [Ports](#ports)
+    - [Depends on](#depends-on)
     - [Container Name](#container-name)
   - [Volumes](#volumes)
     - [Bind Mounting](#bind-mounting)
@@ -91,9 +92,10 @@ services:
 ```
 
 ### Ports
+
 You can expose ports inside your container and map them to the port of the host. 
 The syntax is `hostPort:ContainerPort` and an example would be `9090:8080` the port `8080` on the container will now be mapped to `9090` in the host.
-The ports propert is a __list__ and is specified for each service.
+The ports property is a __list__ and is specified for each service.
 
 ```yaml
 version: "3.8"
@@ -102,6 +104,31 @@ services:
   database:
   redis:
   app:
+    ports:
+      - 9090:8080
+      - 5001:80
+      - 5858:5858
+    build: .
+    image: my-app
+```
+
+### Depends on
+
+If you have two or more containers where the startup sequence matter then you can use `dependens_on` to specify that one service needs another service to start.
+This is usually if you have an application that needs the database to operate. You want to make sure that the database is fully started before you launch the application.
+the depends_on property is a __list__ and specified for one or more services.
+
+In our case our app depends on redis. It is always the service name that goes under `depends_on`
+
+```yaml
+version: "3.8"
+
+services:
+  database:
+  redis:
+  app:
+    depends_on:
+      - redis
     ports:
       - 9090:8080
       - 5001:80
@@ -121,6 +148,12 @@ services:
   database:
   redis:
   app:
+    depends_on:
+      - redis
+    ports:
+      - 9090:8080
+      - 5001:80
+      - 5858:5858
     build: .
     image: my-app
     container_name: my-web-container
