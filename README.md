@@ -163,7 +163,7 @@ services:
 ### Environment Variables
 
 You also specify environment variables either directly or through `.env` file. You specify the variables under `environment` section. `environment` os a __list__ so you can specify several of them.
-You can then use the environment variables like so `${VARIABLE}
+You can then use the environment variables like so `${VARIABLE}`
 
 In following example we have several variables.
 We have `DEVELOPMENT` and `EDITOR` that we have specified and set a value of `1` and `vim` and then we have variables `PATH_TO_DOCKERFILE` and `TAG` and are specified in a .env file. This example shows that you can use the variables alone like `PATH_TO_DOCKERFILE` or you can use it together with other text like `TAG` where you have the image name first.
