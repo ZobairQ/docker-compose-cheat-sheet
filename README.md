@@ -13,6 +13,7 @@ This is a docker-compose cheat-sheet
     - [Ports](#ports)
     - [Depends on](#depends-on)
     - [Container Name](#container-name)
+    - [Environment Variables](#environment-variables)
   - [Volumes](#volumes)
     - [Bind Mounting](#bind-mounting)
       - [Short Syntax](#short-syntax)
@@ -70,7 +71,7 @@ services:
 
 ### Build
 
-If you have a Dockerfile you want to build you can also specify that in the docker compose. 
+If you have a Dockerfile you want to build you can also specify that in the docker compose.
 
 With the dot you are actually saying that the Dockerfile is found in the same directory as the docker-compose file. If the Dockerfile is not found docker-compose will be using the image.
 
@@ -148,6 +149,37 @@ services:
   database:
   redis:
   app:
+    depends_on:
+      - redis
+    ports:
+      - 9090:8080
+      - 5001:80
+      - 5858:5858
+    build: .
+    image: my-app
+    container_name: my-web-container
+```
+
+### Environment Variables
+
+You also specify environment variables either directly or through `.env` file. You specify the variables under `environment` section. `environment` os a __list__ so you can specify several of them.
+You can then use the environment variables like so `${VARIABLE}
+
+In following example we have several variables.
+We have `DEVELOPMENT` and `EDITOR` that we have specified and set a value of `1` and `vim` and then we have variables `PATH_TO_DOCKERFILE` and `TAG` and are specified in a .env file. This example shows that you can use the variables alone like `PATH_TO_DOCKERFILE` or you can use it together with other text like `TAG` where you have the image name first.
+
+```yaml
+version: "3.8"
+
+services:
+  database:
+    build: ${PATH_TO_DOCKERFILE}
+  redis:
+    image: "redis:${TAG}"
+  app:
+    environment:
+      - DEVELOPMENT=1
+      - EDITOR=vim
     depends_on:
       - redis
     ports:
