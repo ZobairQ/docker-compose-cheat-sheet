@@ -14,6 +14,7 @@ This is a docker-compose cheat-sheet
     - [Depends on](#depends-on)
     - [Container Name](#container-name)
     - [Environment Variables](#environment-variables)
+    - [Command](#command)
   - [Volumes](#volumes)
     - [Bind Mounting](#bind-mounting)
       - [Short Syntax](#short-syntax)
@@ -190,6 +191,38 @@ services:
     image: my-app
     container_name: my-web-container
 ```
+
+### Command
+
+Command is a list where you can specify what command should be overwritten. This acts like the `docker exec` meaning that the command will be executed when the container is up and running. Please do not confuse this with `CMD` inside Dockerfile.
+You can either use the list syntax `[]` or not write the command out. The first item in the list will be the main command and the rest will be parameters.
+
+```yaml
+version: "3.8"
+
+services:
+  database:
+    build: ${PATH_TO_DOCKERFILE}
+    command: ["bundle", "exec", "thin", "-p", "3000"]
+
+  redis:
+    image: "redis:${TAG}"
+  app:
+    environment:
+      - DEVELOPMENT=1
+      - EDITOR=vim
+    depends_on:
+      - redis
+    ports:
+      - 9090:8080
+      - 5001:80
+      - 5858:5858
+    build: .
+    image: my-app
+    container_name: my-web-container
+    command: bundle exec thin -p 3000
+```
+
 
 ## Volumes
 
