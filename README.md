@@ -264,8 +264,8 @@ services:
   database:
     volumes:
       - type: bind
-  source: ~/Documents/databases
-  target: /var/lib/mysql/data
+        source: ~/Documents/databases
+        target: /var/lib/mysql/data
   redis:
   app:
 ```
@@ -304,7 +304,7 @@ services:
     volumes:
       - type: volume
         source: db-data
-  target: /var/lib/mysql/data
+        target: /var/lib/mysql/data
   volume:
     no-copy: true
   redis:
